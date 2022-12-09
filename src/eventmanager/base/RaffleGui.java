@@ -6,6 +6,7 @@
 package eventmanager.base;
 
 import eventmanager.FXMLDocumentController;
+import eventmanager.controller.RaffleDrawController;
 import eventmanager.controller.RegistrationController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,10 +19,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.rmj.appdriver.GRider;
 
-public class GriderGui extends Application {
+public class RaffleGui extends Application {
     public final static String pxeMainFormTitle = "Registration";
-    public final static String pxeMainForm = "/eventmanager/view/Registration.fxml";
-    public final static String pxeStageIcon = "/eventmanager/images/GLOGO.png";
+    public final static String pxeMainForm = "/eventmanager/view/RaffleDraw.fxml";
+    public final static String pxeStageIcon = "/eventmanager//images/GLOGO.png";
     public static GRider oApp;
     
     @Override
@@ -29,7 +30,7 @@ public class GriderGui extends Application {
         FXMLLoader view = new FXMLLoader();
         view.setLocation(getClass().getResource(pxeMainForm));
         
-        RegistrationController controller = new RegistrationController();
+        RaffleDrawController controller = new RaffleDrawController();
         controller.setGRider(oApp);
         
         view.setController(controller);        

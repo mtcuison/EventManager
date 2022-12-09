@@ -207,7 +207,7 @@ public class Registration {
         p_oMaster.first();
         
         if ("1".equals(p_oMaster.getString("cPresentx"))){
-            p_sMessage = "Record is already activated..";
+            p_sMessage = "Attendee is already present..";
             return false;
         }
         
