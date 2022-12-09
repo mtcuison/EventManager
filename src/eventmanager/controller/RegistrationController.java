@@ -129,6 +129,7 @@ public class RegistrationController implements Initializable, ScreenInterface {
         btnSave.setOnAction(this::cmdButton_Click);
         btnCancel.setOnAction(this::cmdButton_Click);
         btnConfirm.setOnAction(this::cmdButton_Click);
+        btnClose.setOnAction(this::cmdButton_Click);
 
         
         pnEditMode = EditMode.UNKNOWN;
@@ -378,6 +379,15 @@ public class RegistrationController implements Initializable, ScreenInterface {
                     clearFields();
                     initClass();
                     break;
+               
+                case "btnClose":
+                    if(ShowMessageFX.OkayCancel(null, "Raffle Draw", "Are you sure, do you want to close?") == true){
+                        
+                        Stage stage = (Stage) btnExit.getScene().getWindow();
+                        stage.close();
+                        break;
+                    } else
+                        return;
             }
             
             initButton(pnEditMode);

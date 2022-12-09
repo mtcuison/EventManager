@@ -87,116 +87,6 @@ public class RaffleDraw {
         return true;
     }
     
-    public boolean SaveRecord() throws SQLException{
-        if (p_oApp == null){
-            p_sMessage = "Application driver is not set.";
-            return false;
-        }
-        
-        p_sMessage = "";
-        
-        if (p_nEditMode != EditMode.ADDNEW &&
-            p_nEditMode != EditMode.UPDATE){
-            p_sMessage = "Invalid edit mode detected.";
-            return false;
-        }
-        
-        if (!isEntryOK()) return false;
-        
-        p_oMaster.updateObject("sModified", p_oApp.getUserID());
-        p_oMaster.updateObject("dModified", p_oApp.getServerDate());
-        p_oMaster.updateObject("sAttendNm", getMaster("sLastName").toString() + ", " + getMaster("sFirstNme").toString() +  " " + getMaster("sMiddName").toString());
-        p_oMaster.updateRow();
-        
-        
-        String lsSQL;
-        
-        if (p_nEditMode == EditMode.ADDNEW){           
-//            lsSQL = MiscUtil.rowset2SQL(p_oDetail, "Incentive_Detail", "sPositnNm;cPresentx;cMailSent;cPrintedx;cRaffledx;nEntryNox;sEventIDx");
-            lsSQL = MiscUtil.rowset2SQL(p_oMaster, MASTER_TABLE, "sPositnNm;cPresentx;cMailSent;cPrintedx;cRaffledx;nEntryNox;sEventIDx");
-        } else {            
-            lsSQL = MiscUtil.rowset2SQL(p_oMaster, 
-                                        MASTER_TABLE, 
-                                        "sPositnNm;cPresentx;cMailSent;cPrintedx;cRaffledx;nEntryNox;sEventIDx", 
-                                        "sAttndIDx = " + SQLUtil.toSQL(p_oMaster.getString("sAttndIDx")));
-        }
-        
-        if (!lsSQL.isEmpty()){
-            if (!p_bWithParent) p_oApp.beginTrans();
-            
-            if (p_oApp.executeQuery(lsSQL, MASTER_TABLE, p_sBranchCd, "") <= 0){
-                if (!p_bWithParent) p_oApp.rollbackTrans();
-                p_sMessage = p_oApp.getErrMsg() + ";" + p_oApp.getMessage();
-                return false;
-            }
-            
-
-            if (!insertDetail(getMaster("sAttndIDx").toString())){
-                if (!p_bWithParent) p_oApp.rollbackTrans();
-                return false;
-            }
-        
-            if (!p_bWithParent) p_oApp.commitTrans();
-            
-            return true;
-        } else{
-            p_sMessage = "No record to update.";
-        }
-       
-        
-        
-        p_nEditMode = EditMode.UNKNOWN;
-        return false;
-    }
-    private boolean insertDetail(String lsCodex) throws SQLException{
-        if (p_oApp == null){
-            p_sMessage = "Application driver is not set.";
-            return false;
-        }
-        
-        p_sMessage = "";
-        
-        if (p_nEditMode != EditMode.ADDNEW &&
-            p_nEditMode != EditMode.UPDATE){
-            p_sMessage = "Invalid edit mode detected.";
-            return false;
-        }
-        p_oDetail.first();
-        p_oDetail.updateObject("sModified", p_oApp.getUserID());
-        p_oDetail.updateObject("dModified", p_oApp.getServerDate());
-        p_oDetail.updateObject("sAttndIDx", lsCodex);
-        p_oDetail.updateRow();
-        
-        
-        String lsSQL;
-        
-        if (p_nEditMode == EditMode.ADDNEW){           
-            lsSQL = MiscUtil.rowset2SQL(p_oDetail, DETAIL_TABLE, "");
-        } else {            
-            lsSQL = MiscUtil.rowset2SQL(p_oDetail, 
-                                        DETAIL_TABLE, 
-                                        "", 
-                                        "sEventIDx = " + SQLUtil.toSQL(p_oDetail.getString("sEventIDx")));
-        }
-        
-        if (!lsSQL.isEmpty()){
-            if (p_oApp.executeQuery(lsSQL, DETAIL_TABLE, p_sBranchCd, "") <= 0){
-                if (!p_bWithParent) p_oApp.rollbackTrans();
-                p_sMessage = p_oApp.getErrMsg() + ";" + p_oApp.getMessage();
-                return false;
-            }
-            
-            return true;
-        } else{
-            p_sMessage = "No record to update.";
-        }
-       
-        
-        
-        p_nEditMode = EditMode.UNKNOWN;
-        return false;
-    }
-    
     public boolean ActivateRecord() throws SQLException{
         if (p_nEditMode != EditMode.READY){
             p_sMessage = "Invalid edit mode.";
@@ -205,13 +95,13 @@ public class RaffleDraw {
         
         p_oMaster.first();
         
-        if ("1".equals(p_oMaster.getString("cPresentx"))){
+        if ("1".equals(p_oMaster.getString("cRaffledx"))){
             p_sMessage = "Record is already activated..";
             return false;
         }
         
         String lsSQL = "UPDATE " + DETAIL_TABLE + " SET" +
-                            "  cPresentx = '1'" +
+                            "  cRaffledx = '1'" +
                             ", sModified = " + SQLUtil.toSQL(p_oApp.getUserID()) +
                             ", dModified = " + SQLUtil.toSQL(p_oApp.getServerDate()) +
                         " WHERE sEventIDx = " + SQLUtil.toSQL(p_oMaster.getString("sEventIDx"));
@@ -330,7 +220,6 @@ public class RaffleDraw {
         p_oMaster.populate(loRS);
         MiscUtil.close(loRS);
         
-        
         p_nEditMode = EditMode.READY;
         return true;
     }
@@ -357,16 +246,6 @@ public class RaffleDraw {
         MiscUtil.close(loRS);
         
         p_nEditMode = EditMode.READY;
-        return true;
-    }
-   
-    public boolean UpdateRecord() throws SQLException{
-        if (p_nEditMode != EditMode.READY){
-            p_sMessage = "Invalid edit mode.";
-            return false;
-        }
-        
-        p_nEditMode = EditMode.UPDATE;
         return true;
     }
    
@@ -457,26 +336,6 @@ public class RaffleDraw {
         return lnIndex;
     }
     
-    
-    private boolean isEntryOK() throws SQLException{
-        p_oMaster.first();
-        
-        if (p_oMaster.getString("sLastName").isEmpty()){
-            p_sMessage = "Last name must not be empty.";
-            return false;
-        }
-        if (p_oMaster.getString("sFirstNme").isEmpty()){
-            p_sMessage = "First name must not be empty.";
-            return false;
-        }
-        if (p_oMaster.getString("sMiddName").isEmpty()){
-            p_sMessage = "Middle name must not be empty.";
-            return false;
-        }
-        
-        return true;
-    }
-    
     private void initMaster() throws SQLException{
         RowSetMetaData meta = new RowSetMetaDataImpl();
 
@@ -487,103 +346,48 @@ public class RaffleDraw {
         meta.setColumnType(1, Types.VARCHAR);
         meta.setColumnDisplaySize(1, 4);
         
-        meta.setColumnName(2, "sPrefixNm");
-        meta.setColumnLabel(2, "sPrefixNm");
+        meta.setColumnName(2, "sAttendNm");
+        meta.setColumnLabel(2, "sAttendNm");
         meta.setColumnType(2, Types.VARCHAR);
-        meta.setColumnDisplaySize(2, 5);
+        meta.setColumnDisplaySize(2, 96);
         
-        meta.setColumnName(3, "sLastName");
-        meta.setColumnLabel(3, "sLastName");
+        meta.setColumnName(3, "cPresentx");
+        meta.setColumnLabel(3, "cPresentx");
         meta.setColumnType(3, Types.VARCHAR);
-        meta.setColumnDisplaySize(3, 32);
+        meta.setColumnDisplaySize(3, 1);
         
-        meta.setColumnName(4, "sFirstNme");
-        meta.setColumnLabel(4, "sFirstNme");
+        meta.setColumnName(4, "cMailSent");
+        meta.setColumnLabel(4, "cMailSent");
         meta.setColumnType(4, Types.VARCHAR);
-        meta.setColumnDisplaySize(4, 32);
+        meta.setColumnDisplaySize(4, 1);
         
-        meta.setColumnName(5, "sMiddName");
-        meta.setColumnLabel(5, "sMiddName");
+        meta.setColumnName(5, "cPrintedx");
+        meta.setColumnLabel(5, "cPrintedx");
         meta.setColumnType(5, Types.VARCHAR);
-        meta.setColumnDisplaySize(5, 32);
+        meta.setColumnDisplaySize(5, 1);
         
-        meta.setColumnName(6, "sSuffixNm");
-        meta.setColumnLabel(6, "sSuffixNm");
+        meta.setColumnName(6, "cRaffledx");
+        meta.setColumnLabel(6, "cRaffledx");
         meta.setColumnType(6, Types.VARCHAR);
-        meta.setColumnDisplaySize(6, 5);
+        meta.setColumnDisplaySize(6, 1);
         
-        meta.setColumnName(7, "sAttendNm");
-        meta.setColumnLabel(7, "sAttendNm");
-        meta.setColumnType(7, Types.VARCHAR);
-        meta.setColumnDisplaySize(7, 96);
+        meta.setColumnName(7, "nEntryNox");
+        meta.setColumnLabel(7, "nEntryNox");
+        meta.setColumnType(7, Types.SMALLINT);
         
-        meta.setColumnName(8, "sEmailAdd");
-        meta.setColumnLabel(8, "sEmailAdd");
+        meta.setColumnName(8, "sEventIDx");
+        meta.setColumnLabel(8, "sEventIDx");
         meta.setColumnType(8, Types.VARCHAR);
-        meta.setColumnDisplaySize(8, 50);
+        meta.setColumnDisplaySize(8, 4);
         
-        meta.setColumnName(9, "sCompnyID");
-        meta.setColumnLabel(9, "sCompnyID");
+        meta.setColumnName(9, "sModified");
+        meta.setColumnLabel(9, "sModified");
         meta.setColumnType(9, Types.VARCHAR);
-        meta.setColumnDisplaySize(9, 4);
+        meta.setColumnDisplaySize(9, 12);
         
-        meta.setColumnName(10, "sPositnID");
-        meta.setColumnLabel(10, "sPositnID");
-        meta.setColumnType(10, Types.VARCHAR);
-        meta.setColumnDisplaySize(10, 3);
-        
-        meta.setColumnName(11, "sPositnNm");
-        meta.setColumnLabel(11, "sPositnNm");
-        meta.setColumnType(11, Types.VARCHAR);
-        meta.setColumnDisplaySize(11, 64);
-        
-        meta.setColumnName(12, "cAttndTyp");
-        meta.setColumnLabel(12, "cAttndTyp");
-        meta.setColumnType(12, Types.VARCHAR);
-        meta.setColumnDisplaySize(12, 1);
-        
-        meta.setColumnName(13, "cIsVIPxxx");
-        meta.setColumnLabel(13, "cIsVIPxxx");
-        meta.setColumnType(13, Types.VARCHAR);
-        meta.setColumnDisplaySize(13, 1);
-        
-        meta.setColumnName(14, "cPresentx");
-        meta.setColumnLabel(14, "cPresentx");
-        meta.setColumnType(14, Types.VARCHAR);
-        meta.setColumnDisplaySize(14, 1);
-        
-        meta.setColumnName(15, "cMailSent");
-        meta.setColumnLabel(15, "cMailSent");
-        meta.setColumnType(15, Types.VARCHAR);
-        meta.setColumnDisplaySize(15, 1);
-        
-        meta.setColumnName(16, "cPrintedx");
-        meta.setColumnLabel(16, "cPrintedx");
-        meta.setColumnType(16, Types.VARCHAR);
-        meta.setColumnDisplaySize(16, 1);
-        
-        meta.setColumnName(17, "cRaffledx");
-        meta.setColumnLabel(17, "cRaffledx");
-        meta.setColumnType(17, Types.VARCHAR);
-        meta.setColumnDisplaySize(17, 1);
-        
-        meta.setColumnName(18, "nEntryNox");
-        meta.setColumnLabel(18, "nEntryNox");
-        meta.setColumnType(18, Types.SMALLINT);
-        
-        meta.setColumnName(19, "sEventIDx");
-        meta.setColumnLabel(19, "sEventIDx");
-        meta.setColumnType(19, Types.VARCHAR);
-        meta.setColumnDisplaySize(19, 4);
-        
-        meta.setColumnName(20, "sModified");
-        meta.setColumnLabel(20, "sModified");
-        meta.setColumnType(20, Types.VARCHAR);
-        meta.setColumnDisplaySize(20, 12);
-        
-        meta.setColumnName(21, "dModified");
-        meta.setColumnLabel(21, "dModified");
-        meta.setColumnType(21, Types.DATE);
+        meta.setColumnName(10, "dModified");
+        meta.setColumnLabel(10, "dModified");
+        meta.setColumnType(10, Types.DATE);
         
         p_oMaster = new CachedRowSetImpl();
         p_oMaster.setMetaData(meta);
@@ -594,8 +398,6 @@ public class RaffleDraw {
         MiscUtil.initRowSet(p_oMaster);    
         
         p_oMaster.updateString("sAttndIDx", MiscUtil.getNextCode(MASTER_TABLE, "sAttndIDx", false, p_oApp.getConnection(), ""));
-        p_oMaster.updateString("cAttndTyp", RecordStatus.INACTIVE);
-        p_oMaster.updateString("cIsVIPxxx", RecordStatus.INACTIVE);
         
         p_oMaster.insertRow();
         p_oMaster.moveToCurrentRow();
@@ -603,31 +405,21 @@ public class RaffleDraw {
     private String getSQ_Record(){
         return "SELECT" +
                     " IFNULL(a.sAttndIDx,'')  sAttndIDx" +
-                    ", IFNULL(a.sPrefixNm,'') sPrefixNm" +
-                    ", IFNULL(a.sLastName,'') sLastName" +
-                    ", IFNULL(a.sFirstNme,'') sFirstNme" +
-                    ", IFNULL(a.sMiddName,'') sMiddName" +
-                    ", IFNULL(a.sSuffixNm,'') sSuffixNm" +
                     ", IFNULL(a.sAttendNm,'') sAttendNm" +
-                    ", IFNULL(a.sEmailAdd,'') sEmailAdd" +
-                    ", IFNULL(a.sCompnyID,'') sCompnyID" +
-                    ", IFNULL(b.sPositnID,'') sPositnID" +
-                    ", IFNULL(b.sPositnNm,'') sPositnNm" +
-                    ", IFNULL(a.cAttndTyp,'0') cAttndTyp" +
-                    ", IFNULL(a.cIsVIPxxx,'0') cIsVIPxxx" +
-                    ", IFNULL(c.cPresentx,'0') cPresentx" +
-                    ", IFNULL(c.cMailSent,'0') cMailSent" +
-                    ", IFNULL(c.cPrintedx,'0') cPrintedx" +
-                    ", IFNULL(c.cRaffledx,'0') cRaffledx" +
-                    ", IFNULL(c.nEntryNox, 0 ) nEntryNox" +
-                    ", IFNULL(c.sEventIDx, '') sEventIDx" +
+                    ", IFNULL(b.cPresentx,'0') cPresentx" +
+                    ", IFNULL(b.cMailSent,'0') cMailSent" +
+                    ", IFNULL(b.cPrintedx,'0') cPrintedx" +
+                    ", IFNULL(b.cRaffledx,'0') cRaffledx" +
+                    ", IFNULL(b.nEntryNox, 0 ) nEntryNox" +
+                    ", IFNULL(b.sEventIDx, '') sEventIDx" +
                     ", IFNULL(a.sModified,'') sModified" +
                     ", IFNULL(a.dModified,'') dModified" +
                 " FROM " + MASTER_TABLE + " a " +
-                "   LEFT JOIN Position b " + 
-                "       ON a.sPositnID = b.sPositnID " +
-                "   LEFT JOIN Event_Detail c " + 
-                "       ON a.sAttndIDx = c.sAttndIDx ";
+                "  , Event_Detail b " + 
+                " WHERE a.sAttndIDx =b.sAttndIDx" + 
+                " AND b.cPresentx = '1' " +
+                " AND b.cRaffledx = '0' "+
+                " ORDER BY RAND() LIMIT 1 ";
     }
   
 }
