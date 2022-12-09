@@ -31,7 +31,7 @@
                      <children>
                         <BorderPane prefHeight="200.0" prefWidth="200.0">
                            <left>
-                              <AnchorPane style="-fx-border-color: orange; -fx-border-radius: 5;" BorderPane.alignment="CENTER">
+                              <AnchorPane prefWidth="446.0" style="-fx-border-color: orange; -fx-border-radius: 5;" BorderPane.alignment="CENTER">
                                  <children>
                                     <Pagination fx:id="pagination" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                                     <TableView fx:id="tblClients" onMouseClicked="#tblClients_Clicked" stylesheets="@../css/Tables.css" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
