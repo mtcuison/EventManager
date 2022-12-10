@@ -87,7 +87,7 @@ public class RaffleDraw {
         return true;
     }
     
-    public boolean ActivateRecord() throws SQLException{
+    public boolean ActivateRecord(String fsValue) throws SQLException{
         if (p_nEditMode != EditMode.READY){
             p_sMessage = "Invalid edit mode.";
             return false;
@@ -104,7 +104,7 @@ public class RaffleDraw {
                             "  cRaffledx = '1'" +
                             ", sModified = " + SQLUtil.toSQL(p_oApp.getUserID()) +
                             ", dModified = " + SQLUtil.toSQL(p_oApp.getServerDate()) +
-                        " WHERE sEventIDx = " + SQLUtil.toSQL(p_oMaster.getString("sEventIDx"));
+                        " WHERE sEventIDx = " + SQLUtil.toSQL(fsValue);
 
         if (!p_bWithParent) p_oApp.beginTrans();
         if (p_oApp.executeQuery(lsSQL, DETAIL_TABLE, p_sBranchCd, "") <= 0){

@@ -203,28 +203,38 @@ public class RaffleDrawController implements Initializable, ScreenInterface {
             clientinfo_data.clear();
             
             if (oTrans.LoadRecord()){
-                for (lnCtr = 1; lnCtr <= oTrans.getItemCount(); lnCtr++){
-                    clientinfo_data.add(new ClientInfoModel(String.valueOf(lnCtr),
-                            (String) oTrans.getMaster(lnCtr,"sAttndIDx"),
-                            oTrans.getMaster(lnCtr,"sAttendNm").toString(),
-                            oTrans.getMaster(lnCtr,"cPresentx").toString(),
-                            oTrans.getMaster(lnCtr,"cMailSent").toString(),
-                            oTrans.getMaster(lnCtr,"cPrintedx").toString(),
-                            oTrans.getMaster(lnCtr,"cRaffledx").toString(),
-                            oTrans.getMaster(lnCtr,"cPrintedx").toString(),
-                            oTrans.getMaster(lnCtr,"nEntryNox").toString(),
-                            (String) oTrans.getMaster(lnCtr,"sEventIDx")));
-                    model = new ClientInfoModel(String.valueOf(lnCtr),
-                            (String) oTrans.getMaster(lnCtr,"sAttndIDx"),
-                            oTrans.getMaster(lnCtr,"sAttendNm").toString(),
-                            oTrans.getMaster(lnCtr,"cPresentx").toString(),
-                            oTrans.getMaster(lnCtr,"cMailSent").toString(),
-                            oTrans.getMaster(lnCtr,"cPrintedx").toString(),
-                            oTrans.getMaster(lnCtr,"cRaffledx").toString(),
-                            oTrans.getMaster(lnCtr,"cPrintedx").toString(),
-                            oTrans.getMaster(lnCtr,"nEntryNox").toString(),
-                            (String) oTrans.getMaster(lnCtr,"sEventIDx"));
-                }
+                model = new ClientInfoModel(String.valueOf(1),
+                            (String) oTrans.getMaster("sAttndIDx"),
+                            oTrans.getMaster("sAttendNm").toString(),
+                            oTrans.getMaster("cPresentx").toString(),
+                            oTrans.getMaster("cMailSent").toString(),
+                            oTrans.getMaster("cPrintedx").toString(),
+                            oTrans.getMaster("cRaffledx").toString(),
+                            oTrans.getMaster("cPrintedx").toString(),
+                            oTrans.getMaster("nEntryNox").toString(),
+                            (String) oTrans.getMaster("sEventIDx"));
+//                for (lnCtr = 1; lnCtr <= oTrans.getItemCount(); lnCtr++){
+//                    clientinfo_data.add(new ClientInfoModel(String.valueOf(lnCtr),
+//                            (String) oTrans.getMaster(lnCtr,"sAttndIDx"),
+//                            oTrans.getMaster(lnCtr,"sAttendNm").toString(),
+//                            oTrans.getMaster(lnCtr,"cPresentx").toString(),
+//                            oTrans.getMaster(lnCtr,"cMailSent").toString(),
+//                            oTrans.getMaster(lnCtr,"cPrintedx").toString(),
+//                            oTrans.getMaster(lnCtr,"cRaffledx").toString(),
+//                            oTrans.getMaster(lnCtr,"cPrintedx").toString(),
+//                            oTrans.getMaster(lnCtr,"nEntryNox").toString(),
+//                            (String) oTrans.getMaster(lnCtr,"sEventIDx")));
+//                    model = new ClientInfoModel(String.valueOf(lnCtr),
+//                            (String) oTrans.getMaster(lnCtr,"sAttndIDx"),
+//                            oTrans.getMaster(lnCtr,"sAttendNm").toString(),
+//                            oTrans.getMaster(lnCtr,"cPresentx").toString(),
+//                            oTrans.getMaster(lnCtr,"cMailSent").toString(),
+//                            oTrans.getMaster(lnCtr,"cPrintedx").toString(),
+//                            oTrans.getMaster(lnCtr,"cRaffledx").toString(),
+//                            oTrans.getMaster(lnCtr,"cPrintedx").toString(),
+//                            oTrans.getMaster(lnCtr,"nEntryNox").toString(),
+//                            (String) oTrans.getMaster(lnCtr,"sEventIDx"));
+//                }
             }
         } catch (SQLException ex) {
             System.out.println("SQLException" + ex.getMessage());
@@ -270,17 +280,17 @@ public class RaffleDrawController implements Initializable, ScreenInterface {
                     break;
                 case "btnStop": //create new transaction
                         pbLoaded = true;
+                        thread.stop();
+                        
                         if(pbStart){
-                            if (oTrans.ActivateRecord()){
-                                thread.stop();
-                             
+                            if (oTrans.ActivateRecord(model.getClientIndex02())){
                                 pbStart = false;
     //                            glyphStart.setIcon(FontAwesomeIcon.PLAY);
                                 if (!model.getClientIndex03().equals("")){
                                     lblCongrats.setVisible(true);
 
                                     body.getStyleClass().add("body");
-                                    lblWinner.setText(clientinfo_data.get(0).getClientIndex03());
+                                    lblWinner.setText(oTrans.getMaster("sAttendNm").toString());
                                 }
                                 else {
                                     clearFields();
@@ -332,7 +342,6 @@ public class RaffleDrawController implements Initializable, ScreenInterface {
         lblWinner.setText("");
         lblCongrats.setVisible(false);
         body.getStyleClass().removeAll("body");
-//        body.getStyleClass().remove("body");
 //        initClass();
     }
     private void createNewThread(){
