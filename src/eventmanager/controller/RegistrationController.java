@@ -147,7 +147,7 @@ public class RegistrationController implements Initializable, ScreenInterface {
         txtField08.setOnKeyPressed(this::txtField_KeyPressed);
         pagination.setPageFactory(this::createPage); 
     }    
-     private Node createPage(int pageIndex) {
+    private Node createPage(int pageIndex) {
         int fromIndex = pageIndex * ROWS_PER_PAGE;
         int toIndex = Math.min(fromIndex + ROWS_PER_PAGE, clientinfo_data.size());
         if(clientinfo_data.size()>0){
@@ -310,8 +310,8 @@ public class RegistrationController implements Initializable, ScreenInterface {
                             (String) oTrans.getMaster(lnCtr,"sEventIDx")));
                 }
                 initGrid();
+                loadTab();
             }
-                 loadTab();
 
         } catch (SQLException ex) {
             System.out.println("SQLException" + ex.getMessage());
@@ -419,7 +419,6 @@ public class RegistrationController implements Initializable, ScreenInterface {
         });
         filteredData = new FilteredList<>(clientinfo_data, b -> true);
         autoSearch(txtSeeks99);
-        autoSearch(txtSeeks98);
 
         // 3. Wrap the FilteredList in a SortedList. 
         SortedList<ClientInfoModel> sortedData = new SortedList<>(filteredData);
@@ -437,37 +436,39 @@ public class RegistrationController implements Initializable, ScreenInterface {
             });
             header.setDisable(true);
         });
+        
+        if(oldPnRow >= 0){
+//           tblClients.getSelectionModel().select(oldPnRow);
+           
+            tblClients.getSelectionModel().select(oldPnRow);
+           
+       }
     }
     
     private void autoSearch(TextField txtField){
         int lnIndex = Integer.parseInt(txtField.getId().substring(8, 10));
         boolean fsCode = true;
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(clients-> {
+            filteredData.setPredicate(orders-> {
                 // If filter text is empty, display all persons.
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
                 // Compare order no. and last name of every person with filter text.
                 String lowerCaseFilter = newValue.toLowerCase();
-                switch (lnIndex){
-                        case 99:
-                            if(lnIndex == 99){
-                                return (clients.getClientIndex04().toLowerCase().contains(lowerCaseFilter)); // Does not match.   
-                             }else {
-                                return (clients.getClientIndex04().toLowerCase().contains(lowerCaseFilter)); // Does not match.
-                             }    
-                        default:
-                        return true; 
-                               
-            }
+                if(lnIndex == 99){
+                    return (orders.getClientIndex04().toLowerCase().contains(lowerCaseFilter)); // Does not match.   
+                }else {
+                    return (orders.getClientIndex05().toLowerCase().contains(lowerCaseFilter)); // Does not match.
+                }
             });
-            
             changeTableView(0, ROWS_PER_PAGE);
         });
         loadTab();
     } 
+    
     private void loadTab(){
+
                 int totalPage = (int) (Math.ceil(clientinfo_data.size() * 1.0 / ROWS_PER_PAGE));
                 pagination.setPageCount(totalPage);
                 pagination.setCurrentPageIndex(0);
@@ -475,7 +476,7 @@ public class RegistrationController implements Initializable, ScreenInterface {
                 pagination.currentPageIndexProperty().addListener(
                         (observable, oldValue, newValue) -> changeTableView(newValue.intValue(), ROWS_PER_PAGE));
             
-    }   
+    }    
     private void changeTableView(int index, int limit) {
         int fromIndex = index * limit;
         int toIndex = Math.min(fromIndex + limit, clientinfo_data.size());
@@ -525,6 +526,7 @@ public class RegistrationController implements Initializable, ScreenInterface {
         pnRow = tblClients.getSelectionModel().getSelectedIndex(); 
         pagecounter = pnRow + pagination.getCurrentPageIndex() * ROWS_PER_PAGE;
            if (pagecounter >= 0){
+            oldPnRow = pagecounter;
              if(event.getClickCount() > 0){
 
 //                clear();
@@ -561,14 +563,14 @@ public class RegistrationController implements Initializable, ScreenInterface {
         oldTransNo = TransNo;
         try {
                 if (oTrans.OpenRecord(TransNo)){
-                    txtField01.setText(clientinfo_data.get(pagecounter).getClientIndex02());
-                    txtField02.setText(clientinfo_data.get(pagecounter).getClientIndex03());
-                    txtField03.setText(clientinfo_data.get(pagecounter).getClientIndex04());
-                    txtField04.setText(clientinfo_data.get(pagecounter).getClientIndex05());
-                    txtField05.setText(clientinfo_data.get(pagecounter).getClientIndex06());
-                    txtField06.setText(clientinfo_data.get(pagecounter).getClientIndex07());
-                    txtField07.setText(clientinfo_data.get(pagecounter).getClientIndex09());
-                    txtField08.setText(clientinfo_data.get(pagecounter).getClientIndex12());
+                    txtField01.setText(filteredData.get(pagecounter).getClientIndex02());
+                    txtField02.setText(filteredData.get(pagecounter).getClientIndex03());
+                    txtField03.setText(filteredData.get(pagecounter).getClientIndex04());
+                    txtField04.setText(filteredData.get(pagecounter).getClientIndex05());
+                    txtField05.setText(filteredData.get(pagecounter).getClientIndex06());
+                    txtField06.setText(filteredData.get(pagecounter).getClientIndex07());
+                    txtField07.setText(filteredData.get(pagecounter).getClientIndex09());
+                    txtField08.setText(filteredData.get(pagecounter).getClientIndex12());
                              oldPnRow = pagecounter;   
                 } 
 
