@@ -49,8 +49,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.rmj.appdriver.GRider;
@@ -73,11 +76,12 @@ public class RaffleDrawController implements Initializable, ScreenInterface {
     private Button btnStart,btnStop;
     @FXML
     private Pane btnMin;
-    
+    @FXML
+    private BorderPane body;
     @FXML
     private Pane btnExit;
     @FXML
-    private Label lblWinner,lblCongrats;
+    private Label lblWinner,lblCongrats,lblA;
 
     private GRider oApp;
     private RaffleDraw oTrans;
@@ -101,7 +105,7 @@ public class RaffleDrawController implements Initializable, ScreenInterface {
     private ClientInfoModel model;
  
         private Stage getStage(){
-	return (Stage) lblWinner.getScene().getWindow();
+  return (Stage) lblWinner.getScene().getWindow();
     }
     /**
      * Initializes the controller class.
@@ -149,6 +153,7 @@ public class RaffleDrawController implements Initializable, ScreenInterface {
     }
     private void initButton(int fnValue){
         boolean lbShow = (fnValue == EditMode.ADDNEW || fnValue == EditMode.UPDATE);
+        
 //        
 //        btnCancel.setVisible(lbShow);
 //        btnSave.setVisible(lbShow);
@@ -256,6 +261,7 @@ public class RaffleDrawController implements Initializable, ScreenInterface {
                         clearFields();
                         pbStart = true;
                         lblCongrats.setVisible(false);
+                        body.getStyleClass().removeAll("body");
                         if (thread.getState().toString().equalsIgnoreCase("new"))
                             thread.start();
                         else thread.resume();
@@ -265,19 +271,20 @@ public class RaffleDrawController implements Initializable, ScreenInterface {
                 case "btnStop": //create new transaction
                         pbLoaded = true;
                         pbStart = false;
-                      
                         if (oTrans.ActivateRecord()){
                              thread.stop();
 //                            glyphStart.setIcon(FontAwesomeIcon.PLAY);
                             if (!model.getClientIndex03().equals("")){
                                 lblCongrats.setVisible(true);
+                                
+                                body.getStyleClass().add("body");
                                 lblWinner.setText(clientinfo_data.get(0).getClientIndex03());
                             }
                             else {
                                 clearFields();
                             }
                         } else{
-                            ShowMessageFX.Warning(getStage(), oTrans.getMessage(),"Warning", null);
+                            clearFields();
                         }
                     break;
                 case "btnCancel":
@@ -304,19 +311,21 @@ public class RaffleDrawController implements Initializable, ScreenInterface {
     } 
     
     private void LoadMaster(){
-//        oldTransNo = TransNo;
-//        try {
-//                lblWinner.setText((String) oTrans.getMaster("sAttendNm"));
+        try {
+            if(oTrans.getItemCount()>0){
                 lblWinner.setText(model.getClientIndex03());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RaffleDrawController.class.getName()).log(Level.SEVERE, null, ex);
+        }
                 
-//        }   catch (SQLException ex) {
-//            Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
     
     public void clearFields(){
         lblWinner.setText("");
         lblCongrats.setVisible(false);
+        body.getStyleClass().removeAll("body");
+//        body.getStyleClass().remove("body");
 //        initClass();
     }
     private void createNewThread(){
@@ -327,7 +336,6 @@ public class RaffleDrawController implements Initializable, ScreenInterface {
                     @Override
                     public void run() {
                         loadClient();
-                        
                         LoadMaster();
                     }
                 };
