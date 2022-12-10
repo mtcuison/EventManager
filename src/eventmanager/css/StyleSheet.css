@@ -448,3 +448,10 @@
     -fx-padding: 0.2;
     -fx-spacing: -2;
 }*/
+
+.body{
+    -fx-background-image: url('../images/confetti-40.gif');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-background-size: 95%, auto;
+}

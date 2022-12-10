@@ -22,7 +22,7 @@
    <children>
       <StackPane layoutX="9.0" layoutY="388.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <BorderPane prefHeight="551.0" prefWidth="1359.0">
+            <BorderPane fx:id="body" prefHeight="551.0" prefWidth="1359.0">
                <bottom>
                   <AnchorPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="68.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
@@ -142,9 +142,18 @@
                                     </Label>
                                     <Label fx:id="lblCongrats" text="CONGRATULATIONS">
                                        <font>
-                                          <Font name="Arial Black" size="48.0" />
+                                          <Font name="Arial Black" size="40.0" />
                                        </font>
                                     </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="BOTTOM_CENTER" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
+                                 <children>
+                                    <ImageView fitHeight="60.0" fitWidth="640.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../images/A%20YEAR%20END%20Dinner%202022.png" />
+                                       </image>
+                                    </ImageView>
                                  </children>
                               </VBox>
                            </children>
