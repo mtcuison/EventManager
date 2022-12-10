@@ -58,7 +58,7 @@ public class RegistrationController implements Initializable, ScreenInterface {
     @FXML
     private HBox hbButtons;
     @FXML
-    private Button btnBrowse,btnNew,btnSave,btnCancel,btnConfirm,
+    private Button btnNew,btnSave,btnCancel,btnConfirm,
             btnClose;
     @FXML
     private Pane btnMin;
@@ -176,7 +176,6 @@ public class RegistrationController implements Initializable, ScreenInterface {
         btnSave.setManaged(lbShow);
         btnCancel.setManaged(lbShow);
 //        btnUpdate.setVisible(!lbShow);
-        btnBrowse.setVisible(!lbShow);
         btnNew.setVisible(!lbShow);
         
         txtSeeks99.setDisable(!lbShow);
@@ -197,9 +196,7 @@ public class RegistrationController implements Initializable, ScreenInterface {
             btnCancel.setVisible(lbShow);
             btnSave.setVisible(lbShow);
 //            btnUpdate.setVisible(!lbShow);
-            btnBrowse.setVisible(!lbShow);
             btnNew.setVisible(!lbShow);
-            btnBrowse.setManaged(false);
             btnNew.setManaged(false);
 //            btnUpdate.setManaged(false);
             btnConfirm.setManaged(false);

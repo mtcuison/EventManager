@@ -270,22 +270,29 @@ public class RaffleDrawController implements Initializable, ScreenInterface {
                     break;
                 case "btnStop": //create new transaction
                         pbLoaded = true;
-                        pbStart = false;
-                        if (oTrans.ActivateRecord()){
-                             thread.stop();
-//                            glyphStart.setIcon(FontAwesomeIcon.PLAY);
-                            if (!model.getClientIndex03().equals("")){
-                                lblCongrats.setVisible(true);
-                                
-                                body.getStyleClass().add("body");
-                                lblWinner.setText(clientinfo_data.get(0).getClientIndex03());
-                            }
-                            else {
+                        if(pbStart){
+                            if (oTrans.ActivateRecord()){
+                                thread.stop();
+                             
+                                pbStart = false;
+    //                            glyphStart.setIcon(FontAwesomeIcon.PLAY);
+                                if (!model.getClientIndex03().equals("")){
+                                    lblCongrats.setVisible(true);
+
+                                    body.getStyleClass().add("body");
+                                    lblWinner.setText(clientinfo_data.get(0).getClientIndex03());
+                                }
+                                else {
+                                    clearFields();
+                                }
+                            } else{
                                 clearFields();
                             }
-                        } else{
+                            
+                        }else{
                             clearFields();
                         }
+                        
                     break;
                 case "btnCancel":
                     
