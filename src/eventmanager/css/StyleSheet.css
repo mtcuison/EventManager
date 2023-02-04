@@ -449,9 +449,41 @@
     -fx-spacing: -2;
 }*/
 
+
+.head-ic-min {
+    -fx-background-color: transparent;
+}
+
+.head-ic-close {
+    -fx-background-color: transparent;
+}
+
+.head-ic-min:hover {
+    -fx-background-color: #5E5E5E;
+}
+
+.head-ic-close:hover {
+    -fx-background-color: #D6001C;
+}
+
+.head-ic-min:active {
+    -fx-background-color: transparent;
+}
 .body{
     -fx-background-image: url('../images/confetti-40.gif');
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
     -fx-background-size: 95%, auto;
+}
+
+.parent-body {
+-fx-background-image: url("../images/Shop%20&%20Win%20Background%201024x768px.png");
+-fx-background-repeat: no-repeat;
+-fx-background-size: 1024, 768;
+}
+
+.parent-body-lg {
+-fx-background-image: url("../images/Shop%20&%20Win%20Background%201366x768px.png");
+-fx-background-repeat: no-repeat;
+-fx-background-size: cover;
 }

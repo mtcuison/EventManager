@@ -21,7 +21,7 @@ import org.rmj.appdriver.GRider;
 public class GriderGui extends Application {
     public final static String pxeMainFormTitle = "Registration";
     public final static String pxeMainForm = "/eventmanager/view/Registration.fxml";
-    public final static String pxeStageIcon = "/eventmanager/images/GLOGO.png";
+    public final static String pxeStageIcon = "/eventmanager/images/guanzon_logo.png";
     public static GRider oApp;
     
     @Override
