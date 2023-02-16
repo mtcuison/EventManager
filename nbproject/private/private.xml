@@ -2,18 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/User/Guanzon/github/EventManager/src/eventmanager/base/RaffleDraw.java</file>
-            <file>file:/C:/Users/User/Guanzon/github/EventManager/src/eventmanager/base/RaffleGui.java</file>
-            <file>file:/C:/Users/User/Guanzon/github/EventManager/src/eventmanager/css/StyleSheet.css</file>
-            <file>file:/C:/Users/User/Guanzon/github/EventManager/src/eventmanager/controller/RegistrationController.java</file>
-            <file>file:/C:/Users/User/Guanzon/github/EventManager/src/eventmanager/RaffleInn.java</file>
-            <file>file:/C:/Users/User/Guanzon/github/EventManager/src/eventmanager/model/ClientInfoModel.java</file>
-            <file>file:/C:/Users/User/Guanzon/github/EventManager/src/eventmanager/base/Registration.java</file>
-            <file>file:/C:/Users/User/Guanzon/github/EventManager/src/eventmanager/controller/RaffleDrawController.java</file>
-            <file>file:/C:/Users/User/Guanzon/github/EventManager/src/eventmanager/LetMeInn.java</file>
-            <file>file:/C:/Users/User/Guanzon/github/EventManager/src/eventmanager/base/GriderGui.java</file>
-            <file>file:/C:/Users/User/Guanzon/github/EventManager/src/eventmanager/view/RaffleDraw.fxml</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

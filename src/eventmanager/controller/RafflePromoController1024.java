@@ -5,7 +5,6 @@
 package eventmanager.controller;
 
 import eventmanager.base.LMasDetTran;
-import eventmanager.base.LMasDetTrans;
 import eventmanager.base.RafflePromo;
 import eventmanager.base.ScreenInterface;
 import eventmanager.model.ClientInfoModel;
@@ -42,7 +41,7 @@ import org.rmj.appdriver.constants.EditMode;
  *
  * @author User
  */
-public class RafflePromoController implements Initializable, ScreenInterface {
+public class RafflePromoController1024 implements Initializable, ScreenInterface {
 
     @FXML
     private AnchorPane AnchorMainPanaloInfo,searchBar;
@@ -59,7 +58,7 @@ public class RafflePromoController implements Initializable, ScreenInterface {
     @FXML
     private Pane btnExit;
     @FXML
-    private Label lblWinner, lblRaffleNo, lblAddess, lblMobileNo,lblBranch;
+    private Label lblWinner, lblRaffleNo, lblAddress, lblMobileNo,lblBranch;
 
     private GRider oApp;
     private RafflePromo oTrans;
@@ -95,20 +94,6 @@ public class RafflePromoController implements Initializable, ScreenInterface {
         // TODO
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         System.out.println(screenBounds.getWidth());
-        if(screenBounds.getWidth() > 1366 && screenBounds.getWidth() <= 1920){
-            lblRaffleNo.getStyleClass().add("lbl-raffle-no-lg");
-            lblWinner.getStyleClass().add("lbl-client-name-lg");
-            lblAddess.getStyleClass().add("lbl-client-address-lg");
-            lblMobileNo.getStyleClass().add("lbl-client-address-lg");
-            lblBranch.getStyleClass().add("lbl-client-address-lg");
- 
-        }else{
-            lblRaffleNo.getStyleClass().add("lbl-raffle-no-md");
-            lblWinner.getStyleClass().add("lbl-client-name-md");
-            lblAddess.getStyleClass().add("lbl-client-address-md");
-            lblMobileNo.getStyleClass().add("lbl-client-address-md");
-            lblBranch.getStyleClass().add("lbl-client-address-md");
-        }
         oListener = new LMasDetTran() {
             @Override
             public void MasterRetreive(int i, Object o) {
@@ -149,11 +134,7 @@ public class RafflePromoController implements Initializable, ScreenInterface {
         pnEditMode = EditMode.UNKNOWN;
     }
     private void initButton(int fnValue){
-        boolean lbShow = (fnValue == EditMode.READY);
-            btnSave.setVisible(false);
-        if(lbShow){
-            btnSave.setVisible(true);
-        }
+        boolean lbShow = (fnValue == EditMode.ADDNEW || fnValue == EditMode.UPDATE);
     }
     private void loadClient(){
         int lnCtr;
@@ -249,8 +230,6 @@ public class RafflePromoController implements Initializable, ScreenInterface {
                                 else {
                                     clearFields();
                                 }
-                                
-                                 pnEditMode = oTrans.getEditMode();
                             } else{
                                 clearFields();
                             }
@@ -264,7 +243,6 @@ public class RafflePromoController implements Initializable, ScreenInterface {
                     if(oTrans.ActivateRecord()){
                         clearFields();
                         initClass();  
-                        pnEditMode = EditMode.UNKNOWN;
                     }
                     break;
 //                case "btnClose":btnConfirm
@@ -274,6 +252,7 @@ public class RafflePromoController implements Initializable, ScreenInterface {
 //                    } else
 //                        return;
             }
+            
             initButton(pnEditMode);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -301,7 +280,7 @@ public class RafflePromoController implements Initializable, ScreenInterface {
             if(oTrans.getMasterCount()>0){
                 lblRaffleNo.setText(model.getClientIndex03());
                 lblWinner.setText(model.getClientIndex04());
-                lblAddess.setText(model.getClientIndex05());
+                lblAddress.setText(model.getClientIndex05());
                 lblMobileNo.setText(model.getClientIndex06());
                 lblBranch.setText(model.getClientIndex07());
             }
@@ -310,7 +289,7 @@ public class RafflePromoController implements Initializable, ScreenInterface {
                 thread.stop();
                 pbStart = false;
             }
-            Logger.getLogger(RafflePromoController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RafflePromoController1024.class.getName()).log(Level.SEVERE, null, ex);
         }
                 
     }
@@ -319,7 +298,7 @@ public class RafflePromoController implements Initializable, ScreenInterface {
         lblWinner.setText("");
         lblRaffleNo.setText("");
         lblWinner.setText("");
-        lblAddess.setText("");
+        lblAddress.setText("");
         lblMobileNo.setText("");
         lblBranch.setText("");
         body.getStyleClass().removeAll("body");

@@ -15,11 +15,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorMainPanaloInfo" prefHeight="661.0" prefWidth="1361.0" styleClass="parent-body-lg" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="AnchorMainPanaloInfo" styleClass="parent-body" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <StackPane fx:id="stackPane" layoutX="9.0" layoutY="388.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <BorderPane fx:id="body" prefHeight="551.0" prefWidth="1359.0">
+            <BorderPane fx:id="body" prefHeight="768.0" prefWidth="1024.0">
                <bottom>
                   <AnchorPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="68.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
@@ -109,18 +109,18 @@
                            <children>
                               <BorderPane prefHeight="200.0" prefWidth="200.0">
                                  <center>
-                                    <AnchorPane BorderPane.alignment="CENTER">
+                                    <AnchorPane BorderPane.alignment="TOP_CENTER">
                                        <children>
                                           <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <children>
                                                 <Label fx:id="lblRaffleNo" alignment="CENTER" text="112000000101">
                                                    <font>
-                                                      <Font name="System Bold" size="90.0" />
+                                                      <Font name="System Bold" size="72.0" />
                                                    </font>
                                                 </Label>
                                                 <Label fx:id="lblWinner" alignment="CENTER" text="Dela Cruz, Juan">
                                                    <font>
-                                                      <Font name="System Bold" size="72.0" />
+                                                      <Font name="System Bold" size="50.0" />
                                                    </font>
                                                    <VBox.margin>
                                                       <Insets top="-20.0" />
@@ -128,23 +128,20 @@
                                                 </Label>
                                                 <Label fx:id="lblAddess" alignment="CENTER" text="Tapuac District, Dagupan City">
                                                    <font>
-                                                      <Font name="System Bold" size="34.0" />
+                                                      <Font name="System Bold" size="28.0" />
                                                    </font>
                                                 </Label>
                                                 <Label fx:id="lblMobileNo" alignment="CENTER" text="09123456789">
                                                    <font>
-                                                      <Font name="System Bold" size="34.0" />
+                                                      <Font name="System Bold" size="28.0" />
                                                    </font>
                                                 </Label>
                                                 <Label fx:id="lblBranch" alignment="CENTER" text="GMC Dagupan - Honda">
                                                    <font>
-                                                      <Font name="System Bold" size="34.0" />
+                                                      <Font name="System Bold" size="28.0" />
                                                    </font>
                                                 </Label>
                                              </children>
-                                             <padding>
-                                                <Insets top="20.0" />
-                                             </padding>
                                           </VBox>
                                        </children>
                                     </AnchorPane>

@@ -487,3 +487,60 @@
 -fx-background-repeat: no-repeat;
 -fx-background-size: cover;
 }
+
+/*resize 1024 width*/
+.lbl-raffle-no-sm{
+    -fx-font-size: 64px;
+    -fx-font-weight: bold;
+}
+
+/*resize*/
+.lbl-client-name-sm{
+    -fx-font-size: 54px;
+    -fx-font-weight: bold;
+}
+
+/*resize*/
+.lbl-client-address-sm{
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+
+/*resize 1366 width*/
+.lbl-raffle-no-md{
+    -fx-font-size: 86px;
+    -fx-font-weight: bold;
+}
+
+/*resize*/
+.lbl-client-name-md{
+    -fx-font-size: 64px;
+    -fx-font-weight: bold;
+}
+
+/*resize*/
+.lbl-client-address-md{
+    -fx-font-size: 34px;
+    -fx-font-weight: bold;
+}
+
+
+
+/*resize 1366 width*/
+.lbl-raffle-no-lg{
+    -fx-font-size: 100px;
+    -fx-font-weight: bold;
+}
+
+/*resize*/
+.lbl-client-name-lg{
+    -fx-font-size: 86px;
+    -fx-font-weight: bold;
+}
+
+/*resize*/
+.lbl-client-address-lg{
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+}
