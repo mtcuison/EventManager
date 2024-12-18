@@ -1,4 +1,4 @@
-package eventmanager.controller;
+package eventmanager.view;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import eventmanager.base.LMasDetTrans;
@@ -29,6 +29,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.Pagination;
 import javafx.scene.control.TableColumn;
@@ -66,20 +67,17 @@ public class RegistrationController implements Initializable, ScreenInterface {
     @FXML
     private Pane btnExit;
     @FXML
-    private TableView tblClients,tblRedemption;
+    private TableView tblClients;
 
     @FXML
     private TableColumn clientsIndex01,clientsIndex02,clientsIndex03;
     @FXML
-    private TableColumn redeemIndex01,redeemIndex02,redeemIndex03,redeemIndex04,redeemIndex05,redeemIndex06;
-    @FXML
     private Pagination pagination;
     @FXML
     private TextField txtField01,txtField02,txtField03,txtField04,txtField05,txtField06,txtField07,txtField08,txtSeeks99,txtSeeks98;
+    private CheckMenuItem itemStat01;
     @FXML
-    private MenuButton menuStatus;
-    @FXML
-    private CheckMenuItem itemStat01,itemStat02,itemStat03;
+    private CheckMenuItem itemStat02,itemStat03;
 
     
     private GRider oApp;
@@ -99,6 +97,12 @@ public class RegistrationController implements Initializable, ScreenInterface {
     private FilteredList<ClientInfoModel> filteredData;
 
     private final ObservableList<ClientInfoModel> clientinfo_data= FXCollections.observableArrayList();
+    @FXML
+    private Label lblStatus;
+    @FXML
+    private TextField txtField09;
+    @FXML
+    private TextField txtField10;
  
  
         private Stage getStage(){
@@ -454,7 +458,7 @@ public class RegistrationController implements Initializable, ScreenInterface {
                 // Compare order no. and last name of every person with filter text.
                 String lowerCaseFilter = newValue.toLowerCase();
                 if(lnIndex == 99){
-                    return (orders.getClientIndex04().toLowerCase().contains(lowerCaseFilter)); // Does not match.   
+                    return (orders.getClientIndex08().toLowerCase().contains(lowerCaseFilter)); // Does not match.   
                 }else {
                     return (orders.getClientIndex05().toLowerCase().contains(lowerCaseFilter)); // Does not match.
                 }
@@ -485,7 +489,6 @@ public class RegistrationController implements Initializable, ScreenInterface {
             tblClients.setItems(sortedData); 
     }
     
-    @FXML
     private void itemStat01_Filter(ActionEvent event) {
          if (itemStat01.isSelected()){
          itemStat02.setSelected(FALSE);
@@ -498,7 +501,6 @@ public class RegistrationController implements Initializable, ScreenInterface {
      
     }
 
-    @FXML
     private void itemStat02_Filter(ActionEvent event) {
          if (itemStat02.isSelected()){
          itemStat01.setSelected(FALSE);
@@ -508,7 +510,6 @@ public class RegistrationController implements Initializable, ScreenInterface {
              txtSeeks98.setText("");
                  }
     }
-        @FXML
     private void itemStat03_Filter(ActionEvent event) {
          if (itemStat02.isSelected()){
          itemStat01.setSelected(FALSE);
@@ -568,7 +569,9 @@ public class RegistrationController implements Initializable, ScreenInterface {
                     txtField06.setText(filteredData.get(pagecounter).getClientIndex07());
                     txtField07.setText(filteredData.get(pagecounter).getClientIndex09());
                     txtField08.setText(filteredData.get(pagecounter).getClientIndex12());
-                             oldPnRow = pagecounter;   
+                    txtField09.setText(filteredData.get(pagecounter).getClientIndex08());
+                    
+                    oldPnRow = pagecounter;   
                 } 
 
         }   catch (SQLException ex) {
@@ -576,16 +579,17 @@ public class RegistrationController implements Initializable, ScreenInterface {
         }
     }
     private void LoadMaster(){
-//        oldTransNo = TransNo;
         try {
-                txtField01.setText((String) oTrans.getMaster("sAttndIDx"));
-                txtField02.setText((String)oTrans.getMaster("sPrefixNm"));
-                txtField03.setText((String)oTrans.getMaster("sLastName"));
-                txtField04.setText((String)oTrans.getMaster("sFirstNme"));
-                txtField05.setText((String)oTrans.getMaster("sMiddName"));
-                txtField06.setText((String)oTrans.getMaster("sSuffixNm"));
-                txtField07.setText((String)oTrans.getMaster("sEmailAdd"));
-                txtField08.setText((String)oTrans.getMaster("sPositnNm"));
+            txtField01.setText((String) oTrans.getMaster("sAttndIDx"));
+            txtField02.setText((String)oTrans.getMaster("sPrefixNm"));
+            txtField03.setText((String)oTrans.getMaster("sLastName"));
+            txtField04.setText((String)oTrans.getMaster("sFirstNme"));
+            txtField05.setText((String)oTrans.getMaster("sMiddName"));
+            txtField06.setText((String)oTrans.getMaster("sSuffixNm"));
+            txtField07.setText((String)oTrans.getMaster("sEmailAdd"));
+            txtField08.setText((String)oTrans.getMaster("sCompnyNm"));
+            txtField09.setText((String)oTrans.getMaster("sAttendNm"));
+            txtField10.setText((String)oTrans.getMaster("sPositnNm"));
         }   catch (SQLException ex) {
             Logger.getLogger(RegistrationController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -601,6 +605,8 @@ public class RegistrationController implements Initializable, ScreenInterface {
         txtField07.clear();
         txtField08.clear();
         txtSeeks99.clear();
+        txtField09.clear();
+        txtField10.clear();
 //        lblStatus.setVisible(false);
 //        oTrans = new Registration(oApp, oApp.getBranchCode(), false);
 //        oTrans.setListener(oListener);

@@ -6,7 +6,7 @@
 package eventmanager.base;
 
 import eventmanager.FXMLDocumentController;
-import eventmanager.controller.RegistrationController;
+import eventmanager.view.RegistrationController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -35,12 +35,7 @@ public class GriderGui extends Application {
         view.setController(controller);        
         Parent parent = view.load();
         Scene scene = new Scene(parent);
-//        Parent root = FXMLLoader.load(getClass().getResource(pxeMainForm));
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-
-
+        
         //get the screen size
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
@@ -58,6 +53,7 @@ public class GriderGui extends Application {
         stage.centerOnScreen();
         stage.show();
     }
+    
      /*Parameters*/
     /**
      * @param args the command line arguments

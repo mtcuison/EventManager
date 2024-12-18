@@ -39,6 +39,7 @@ public class RaffleDraw {
     private int p_nEditMode;
 
     private String p_sMessage;
+    private String p_sAttndIDx;
     private boolean p_bWithUI = true;
     
     private LMasDetTrans p_oListener;
@@ -82,7 +83,6 @@ public class RaffleDraw {
         p_sMessage = "";
         
         initMaster();
-        System.out.println("sAttndIDx = " + getMaster("sAttndIDx").toString());
         p_nEditMode = EditMode.ADDNEW;
         return true;
     }
@@ -104,7 +104,8 @@ public class RaffleDraw {
                             "  cRaffledx = '1'" +
                             ", sModified = " + SQLUtil.toSQL(p_oApp.getUserID()) +
                             ", dModified = " + SQLUtil.toSQL(p_oApp.getServerDate()) +
-                        " WHERE sEventIDx = " + SQLUtil.toSQL(p_oMaster.getString("sEventIDx"));
+                        " WHERE sEventIDx = " + SQLUtil.toSQL(p_oMaster.getString("sEventIDx")) +
+                            " AND sAttndIDx = " + SQLUtil.toSQL(p_oMaster.getString("sAttndIDx"));
 
         if (!p_bWithParent) p_oApp.beginTrans();
         if (p_oApp.executeQuery(lsSQL, DETAIL_TABLE, p_sBranchCd, "") <= 0){
@@ -214,7 +215,6 @@ public class RaffleDraw {
         
         //open master
         lsSQL = getSQ_Record() + " WHERE a.sAttndIDx = " + SQLUtil.toSQL(fsValue);
-        System.out.println(lsSQL);
         loRS = p_oApp.executeQuery(lsSQL);
         p_oMaster = factory.createCachedRowSet();
         p_oMaster.populate(loRS);
@@ -239,7 +239,6 @@ public class RaffleDraw {
         RowSetFactory factory = RowSetProvider.newFactory();
         
         //open master
-//        lsSQL = MiscUtil.addCondition(getSQ_Record(), "sPanaloCD= " + SQLUtil.toSQL(fsValue));
         loRS = p_oApp.executeQuery(getSQ_Record());
         p_oMaster = factory.createCachedRowSet();
         p_oMaster.populate(loRS);
@@ -404,8 +403,8 @@ public class RaffleDraw {
     }
     private String getSQ_Record(){
         return "SELECT" +
-                    " IFNULL(a.sAttndIDx,'')  sAttndIDx" +
-                    ", IFNULL(a.sAttendNm,'') sAttendNm" +
+                    "  IFNULL(a.sAttndIDx,'') sAttndIDx" +
+                    ", IFNULL(CONCAT(e.sFirstNme, ' ', e.sLastName), '') sAttendNm" +
                     ", IFNULL(b.cPresentx,'0') cPresentx" +
                     ", IFNULL(b.cMailSent,'0') cMailSent" +
                     ", IFNULL(b.cPrintedx,'0') cPrintedx" +
@@ -414,13 +413,18 @@ public class RaffleDraw {
                     ", IFNULL(b.sEventIDx, '') sEventIDx" +
                     ", IFNULL(a.sModified,'') sModified" +
                     ", IFNULL(a.dModified,'') dModified" +
+                    ", IFNULL(c.`sCompnyNm`, '') sCompnyNm" +
                 " FROM " + MASTER_TABLE + " a " +
-                "  , Event_Detail b " + 
-                " WHERE a.sAttndIDx =b.sAttndIDx" + 
-                " AND b.cPresentx = '1' " +
-                " AND b.cRaffledx = '0' "+
+                        " LEFT JOIN `Event_Attendee_Company` c ON a.`sCompnyID` = c.`sCompnyID`" +
+                        " LEFT JOIN `Event_Attendee_Position`d ON a.`sPositnID` = d.`sPositnID`" +
+                    ", Event_Detail b " +
+                        " LEFT JOIN Event_Attendee_List e ON b.sAttndIDx = e.sAttndIDx" +
+                " WHERE a.sAttndIDx = b.sAttndIDx" + 
+                    " AND b.sEventIDx IN ('M001240001', 'M001240002')" +
+                    " AND b.cPresentx = '1' " +
+                    " AND b.cRaffledx = '0' "+
                 " ORDER BY RAND() LIMIT 1 ";
+                //CONCAT(c.`sCompnyNm`, ' - ', d.`sPositnDs`) sCompnyNm" +
     }
-  
 }
 

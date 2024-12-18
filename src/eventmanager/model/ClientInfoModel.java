@@ -11,9 +11,6 @@ import javafx.beans.property.SimpleStringProperty;
  * @author user
  */
 public class ClientInfoModel {
-
-
-
     private SimpleStringProperty clientIndex01;
     private SimpleStringProperty clientIndex02;  
     private SimpleStringProperty clientIndex03;
@@ -27,7 +24,6 @@ public class ClientInfoModel {
     private SimpleStringProperty clientIndex11; 
     private SimpleStringProperty clientIndex12;
     private SimpleStringProperty clientIndex13;
-
     private SimpleStringProperty clientIndex14;  
     private SimpleStringProperty clientIndex15;
     private SimpleStringProperty clientIndex16;
@@ -38,11 +34,8 @@ public class ClientInfoModel {
     private SimpleStringProperty clientIndex21; 
     private SimpleStringProperty clientIndex22;
 
+    public ClientInfoModel(){}
     
-    public ClientInfoModel(){
-        
-    }
-//    Raffle Draw
     public ClientInfoModel(String clientIndex01,
             String clientIndex02,
             String clientIndex03,
@@ -52,8 +45,7 @@ public class ClientInfoModel {
             String clientIndex07,
             String clientIndex08,
             String clientIndex09,
-            String clientIndex10) 
-{
+            String clientIndex10) {
         this.clientIndex01 = new SimpleStringProperty(clientIndex01);
         this.clientIndex02 = new SimpleStringProperty(clientIndex02);
         this.clientIndex03 = new SimpleStringProperty(clientIndex03);
@@ -71,7 +63,35 @@ public class ClientInfoModel {
         this.clientIndex10 = new SimpleStringProperty(clientIndex10);
     }
     
-//    Entry/Tagging
+    public ClientInfoModel(String clientIndex01,
+            String clientIndex02,
+            String clientIndex03,
+            String clientIndex04,
+            String clientIndex05,
+            String clientIndex06,
+            String clientIndex07,
+            String clientIndex08,
+            String clientIndex09,
+            String clientIndex10,
+            String clientIndex11) {
+        this.clientIndex01 = new SimpleStringProperty(clientIndex01);
+        this.clientIndex02 = new SimpleStringProperty(clientIndex02);
+        this.clientIndex03 = new SimpleStringProperty(clientIndex03);
+        this.clientIndex04 = new SimpleStringProperty(clientIndex04);
+        this.clientIndex05 = new SimpleStringProperty(clientIndex05);
+        this.clientIndex07 = new SimpleStringProperty(clientIndex07);
+        this.clientIndex08 = new SimpleStringProperty(clientIndex08);
+        if(clientIndex06.equalsIgnoreCase("0")){
+            this.clientIndex06 = new SimpleStringProperty("Absent");
+        }else{
+            this.clientIndex06 = new SimpleStringProperty("Present");
+        }
+        
+        this.clientIndex09 = new SimpleStringProperty(clientIndex09);
+        this.clientIndex10 = new SimpleStringProperty(clientIndex10);
+        this.clientIndex11 = new SimpleStringProperty(clientIndex11);
+    }
+    
     public ClientInfoModel(String clientIndex01,
             String clientIndex02,
             String clientIndex03,
@@ -92,8 +112,7 @@ public class ClientInfoModel {
             String clientIndex18,
             String clientIndex19,
             String clientIndex20,
-            String clientIndex21) 
-{
+            String clientIndex21) {
         this.clientIndex01 = new SimpleStringProperty(clientIndex01);
         this.clientIndex02 = new SimpleStringProperty(clientIndex02);
         this.clientIndex03 = new SimpleStringProperty(clientIndex03);
@@ -195,9 +214,4 @@ public class ClientInfoModel {
     public String getClientIndex21() {
         return clientIndex21.get();
     }
-//
-//    public String getClientIndex22() {
-//        return clientIndex22.get();
-//    }
-
 }

@@ -11,7 +11,6 @@ import java.sql.Types;
 import java.util.Calendar;
 import java.util.Date;
 import javax.sql.RowSetMetaData;
-import javax.sql.RowSetMetaData;
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetMetaDataImpl;
@@ -30,8 +29,9 @@ import org.rmj.appdriver.constants.RecordStatus;
  * @author User
  */
 public class Registration {
-   private final String MASTER_TABLE = "Event_Attendee_List";
-   private final String DETAIL_TABLE = "Event_Detail";
+    private final String MASTER_TABLE = "Event_Attendee_List";
+    private final String DETAIL_TABLE = "Event_Detail";
+    private final String EVENTID = "M001230002";
     
     private final GRider p_oApp;
     private final boolean p_bWithParent;
@@ -213,9 +213,11 @@ public class Registration {
         
         String lsSQL = "UPDATE " + DETAIL_TABLE + " SET" +
                             "  cPresentx = '1'" +
+                            ", dConfirmd = " + SQLUtil.toSQL(p_oApp.getServerDate()) +
                             ", sModified = " + SQLUtil.toSQL(p_oApp.getUserID()) +
                             ", dModified = " + SQLUtil.toSQL(p_oApp.getServerDate()) +
-                        " WHERE sEventIDx = " + SQLUtil.toSQL(p_oMaster.getString("sEventIDx"));
+                        " WHERE sEventIDx = " + SQLUtil.toSQL(p_oMaster.getString("sEventIDx")) +
+                            " AND sAttndIDx = " + SQLUtil.toSQL(p_oMaster.getString("sAttndIDx"));
 
         if (!p_bWithParent) p_oApp.beginTrans();
         if (p_oApp.executeQuery(lsSQL, DETAIL_TABLE, p_sBranchCd, "") <= 0){
@@ -320,8 +322,8 @@ public class Registration {
         RowSetFactory factory = RowSetProvider.newFactory();
         
         //open master
-//        lsSQL = MiscUtil.addCondition(getSQ_Record(), "sPanaloCD= " + SQLUtil.toSQL(fsValue));
-        loRS = p_oApp.executeQuery(getSQ_Record());
+        lsSQL = getSQ_Record();
+        loRS = p_oApp.executeQuery(lsSQL);
         p_oMaster = factory.createCachedRowSet();
         p_oMaster.populate(loRS);
         MiscUtil.close(loRS);
@@ -785,7 +787,7 @@ public class Registration {
     }
     private String getSQ_Record(){
         return "SELECT" +
-                    " IFNULL(a.sAttndIDx,'')  sAttndIDx" +
+                    "  IFNULL(a.sAttndIDx,'')  sAttndIDx" +
                     ", IFNULL(a.sPrefixNm,'') sPrefixNm" +
                     ", IFNULL(a.sLastName,'') sLastName" +
                     ", IFNULL(a.sFirstNme,'') sFirstNme" +
@@ -795,7 +797,7 @@ public class Registration {
                     ", IFNULL(a.sEmailAdd,'') sEmailAdd" +
                     ", IFNULL(a.sCompnyID,'') sCompnyID" +
                     ", IFNULL(b.sPositnID,'') sPositnID" +
-                    ", IFNULL(b.sPositnNm,'') sPositnNm" +
+                    ", CONCAT(IFNULL(d.sCompnyNm,''), '/', IFNULL(b.sPositnDs,'')) sPositnNm" +
                     ", IFNULL(a.cAttndTyp,'0') cAttndTyp" +
                     ", IFNULL(a.cIsVIPxxx,'0') cIsVIPxxx" +
                     ", IFNULL(c.cPresentx,'0') cPresentx" +
@@ -806,11 +808,15 @@ public class Registration {
                     ", IFNULL(c.sEventIDx, '') sEventIDx" +
                     ", IFNULL(a.sModified,'') sModified" +
                     ", IFNULL(a.dModified,'') dModified" +
+                    ", IFNULL(d.sCompnyNm,'') sCompnyNm" +
                 " FROM " + MASTER_TABLE + " a " +
-                "   LEFT JOIN Position b " + 
-                "       ON a.sPositnID = b.sPositnID " +
-                "   LEFT JOIN Event_Detail c " + 
-                "       ON a.sAttndIDx = c.sAttndIDx " +
+                    " LEFT JOIN Event_Attendee_Position b " + 
+                        " ON a.sPositnID = b.sPositnID " +
+                    " LEFT JOIN Event_Attendee_Company d" +
+                        " ON a.sCompnyID = d.sCompnyID" +
+                    ", Event_Detail c " + 
+                " WHERE a.sAttndIDx = c.sAttndIDx " +
+                    " AND c.sEventIDx = " + SQLUtil.toSQL(EVENTID) +
                 " ORDER BY a.sAttendNm";
     }
     

@@ -6,8 +6,8 @@
 package eventmanager.base;
 
 import eventmanager.FXMLDocumentController;
-import eventmanager.controller.RaffleDrawController;
-import eventmanager.controller.RegistrationController;
+import eventmanager.view.RaffleDrawController;
+import eventmanager.view.RegistrationController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -22,7 +22,7 @@ import org.rmj.appdriver.GRider;
 public class RaffleGui extends Application {
     public final static String pxeMainFormTitle = "Registration";
     public final static String pxeMainForm = "/eventmanager/view/RaffleDraw.fxml";
-    public final static String pxeStageIcon = "/eventmanager//images/GLOGO.png";
+    public final static String pxeStageIcon = "/eventmanager/images/GLOGO.png";
     public static GRider oApp;
     
     @Override
@@ -54,8 +54,13 @@ public class RaffleGui extends Application {
         // set stage as maximized but not full screen
         stage.setX(bounds.getMinX());
         stage.setY(bounds.getMinY());
-        stage.setWidth(bounds.getWidth());
-        stage.setHeight(bounds.getHeight());
+        
+//        stage.setWidth(bounds.getWidth());
+//        stage.setHeight(bounds.getHeight());
+        
+        stage.setWidth(1366);
+        stage.setHeight(768);
+        
         stage.centerOnScreen();
         stage.show();
     }

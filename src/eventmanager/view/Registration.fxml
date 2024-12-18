@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorMainPanaloInfo" prefHeight="661.0" prefWidth="1361.0" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="AnchorMainPanaloInfo" prefHeight="661.0" prefWidth="1361.0" stylesheets="@../css/StyleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <StackPane layoutX="9.0" layoutY="388.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -77,10 +77,11 @@
                                                          </columnConstraints>
                                                          <rowConstraints>
                                                             <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                             <RowConstraints maxHeight="1.7976931348623157E308" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
-                                                            <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
                                                             <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
                                                             <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
                                                             <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
@@ -88,54 +89,66 @@
                                                             <RowConstraints prefHeight="30.0" vgrow="SOMETIMES" />
                                                          </rowConstraints>
                                                          <children>
-                                                            <TextField fx:id="txtField01" focusTraversable="false" maxHeight="-Infinity" minHeight="-Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3">
+                                                            <TextField fx:id="txtField01" focusTraversable="false" maxHeight="-Infinity" minHeight="-Infinity" GridPane.columnIndex="1" GridPane.columnSpan="2">
                                                                <font>
                                                                   <Font name="System Bold" size="12.0" />
                                                                </font>
                                                             </TextField>
-                                                            <Label text="Prefix Name : " GridPane.rowIndex="1">
+                                                            <Label text="Prefix Name : " visible="false" GridPane.rowIndex="5">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <TextField fx:id="txtField02" maxHeight="-Infinity" minHeight="-Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-                                                            <Label prefHeight="17.0" prefWidth="144.0" text="Middle Name : " GridPane.rowIndex="4">
+                                                            <TextField fx:id="txtField09" maxHeight="-Infinity" minHeight="-Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                                                            <TextField fx:id="txtField10" maxHeight="-Infinity" minHeight="-Infinity" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+                                                            <TextField fx:id="txtField08" maxHeight="-Infinity" minHeight="-Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                                                            <TextField fx:id="txtField02" maxHeight="-Infinity" minHeight="-Infinity" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />
+                                                            <Label prefHeight="17.0" prefWidth="144.0" text="Middle Name : " visible="false" GridPane.rowIndex="8">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <TextField fx:id="txtField03" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
-                                                            <TextField fx:id="txtField04" maxHeight="-Infinity" minHeight="-Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-                                                            <TextField fx:id="txtField05" layoutX="109.0" layoutY="86.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
-                                                            <TextField fx:id="txtField06" layoutX="109.0" layoutY="116.0" maxHeight="-Infinity" minHeight="-Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />
-                                                            <TextField fx:id="txtField07" maxHeight="-Infinity" minHeight="-Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
-                                                            <TextField fx:id="txtField08" maxHeight="-Infinity" minHeight="-Infinity" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7" />
-                                                            <Label prefHeight="17.0" prefWidth="160.0" text="First Name : " GridPane.rowIndex="3">
+                                                            <TextField fx:id="txtField03" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
+                                                            <TextField fx:id="txtField04" maxHeight="-Infinity" minHeight="-Infinity" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="7" />
+                                                            <TextField fx:id="txtField05" layoutX="109.0" layoutY="86.0" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8" />
+                                                            <TextField fx:id="txtField06" layoutX="109.0" layoutY="116.0" maxHeight="-Infinity" minHeight="-Infinity" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9" />
+                                                            <TextField fx:id="txtField07" maxHeight="-Infinity" minHeight="-Infinity" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="10" />
+                                                            <Label prefHeight="17.0" prefWidth="160.0" text="First Name : " visible="false" GridPane.rowIndex="7">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label prefHeight="17.0" text="Email Address:" GridPane.rowIndex="6">
+                                                            <Label prefHeight="17.0" text="Email Address:" visible="false" GridPane.rowIndex="10">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label text="Position : " GridPane.rowIndex="7">
+                                                            <Label text="Ofc/Dept:" GridPane.rowIndex="2">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label text="Last Name : " GridPane.rowIndex="2">
+                                                            <Label text="Last Name : " visible="false" GridPane.rowIndex="6">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label prefHeight="17.0" prefWidth="82.0" text="Suffix :" GridPane.rowIndex="5">
+                                                            <Label prefHeight="17.0" prefWidth="82.0" text="Suffix :" visible="false" GridPane.rowIndex="9">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>
                                                             </Label>
                                                             <Label layoutX="15.0" layoutY="54.0" text="Attendance ID : ">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label text="Full Name:" GridPane.rowIndex="1">
+                                                               <font>
+                                                                  <Font size="14.0" />
+                                                               </font>
+                                                            </Label>
+                                                            <Label text="Office:" visible="false" GridPane.rowIndex="3">
                                                                <font>
                                                                   <Font size="14.0" />
                                                                </font>

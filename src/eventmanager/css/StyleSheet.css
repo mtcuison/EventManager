@@ -266,7 +266,7 @@
 
 /*******************************************************************************
  *                                                                             *
- * RADIO BUTTON CSS                                                                     *
+ * RADIO BUTTON CSS                                                            *
  *                                                                             *
  ******************************************************************************/
 
@@ -454,4 +454,10 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
     -fx-background-size: 95%, auto;
+}
+
+.parent-body {
+-fx-background-image: url("../images/neon.jpg");
+-fx-background-repeat: no-repeat;
+-fx-background-size: cover;
 }
