@@ -61,13 +61,13 @@ public class CreateBonus {
             while (loRS.next()){
                 lnTenure = loRS.getDouble("nTenurexx");
                 
-                if (lnTenure < 5.00){
+                if (lnTenure <= 5.00){
                     lnBonus = 0;
-                } else if (lnTenure < 10.00){
+                } else if (lnTenure <= 10.00){
                     lnBonus = 1;
-                } else if (lnTenure < 15.00){
+                } else if (lnTenure <= 15.00){
                     lnBonus = 2;
-                } else if (lnTenure < 20.00){
+                } else if (lnTenure <= 20.00){
                     lnBonus = 3;
                 } else {
                     lnBonus = 4;

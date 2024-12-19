@@ -13,5 +13,11 @@
             <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/Raffle/EventManager/src/eventmanager/model/ClientInfoModel.java</file>
             <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/Raffle/EventManager/src/eventmanager/css/StyleSheet.css</file>
         </group>
+        <group name="CAS - Mac">
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/Raffle/EventManager/src/eventmanager/RaffleInn.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/Raffle/EventManager/src/eventmanager/base/RaffleDraw.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/Raffle/EventManager/src/eventmanager/view/RaffleDrawController.java</file>
+            <file>file:/D:/Guanzon/GMC%20SEG%20Folder%20-%20Java/Raffle/EventManager/src/eventmanager/css/StyleSheet.css</file>
+        </group>
     </open-files>
 </project-private>
